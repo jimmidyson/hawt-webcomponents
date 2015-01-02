@@ -1,4 +1,4 @@
-<polymer-element name="demo-page" attributes="pathArg1 queryParam1" noscript>
+<polymer-element name="demo-page" attributes="pathArg1 queryParam1">
   <template>
     <p>Path variables and query parameters are automatically attached to the element's attributes. Change values in the address bar and see them change here.</p>
 
@@ -8,4 +8,15 @@
     </ul>
 
   </template>
+  <script>
+    (function() {
+      'use strict';
+
+      window.Perspectives.push(
+        {label: "Demo", href: '/demo/1234', element: 'demo-page', path: '/demo/:pathArg1', icon: 'accessibility'}
+      );
+
+      Polymer({});
+    })();
+  </script>
 </polymer-element>

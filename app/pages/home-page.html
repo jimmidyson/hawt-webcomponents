@@ -1,7 +1,18 @@
-<polymer-element name="home-page" noscript>
+<polymer-element name="home-page">
   <template>
-      <h2>Routing with Web Components!</h2>
+    <h2>Routing with Web Components!</h2>
 
-      <p>Hello world!</p>
+    <p>Hello world!</p>
   </template>
+  <script>
+    (function() {
+      'use strict';
+
+      window.Perspectives.push(
+        {label: "Fabric8", href: '/', element: 'home-page', path: '/', icon: 'home'}
+      );
+
+      Polymer({});
+    })();
+  </script>
 </polymer-element>

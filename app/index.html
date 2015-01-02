@@ -9,10 +9,6 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-  <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="/styles/main.css">
-  <!-- endbuild-->
-
   <!-- build:js bower_components/webcomponentsjs/webcomponents.min.js -->
   <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
   <!-- endbuild -->
@@ -20,35 +16,60 @@
   <!-- build:vulcanized elements/elements.vulcanized.html -->
   <link rel="import" href="/elements/elements.html">
   <!-- endbuild-->
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="/styles/main.css" shim-shadowdom>
+  <!-- endbuild-->
+
 </head>
 
 <body unresolved fullbleed layout vertical>
 
+  <core-style id="coverimgstyle">
+    #coverImg::after {
+      background-image: url({{g.coverImg}});
+    }
+  </core-style>
   <template id="t" is="auto-binding">
-    <link rel="stylesheet" href="/layouts/sidebar-layout.css">
-    <core-scaffold>
-      <core-header-panel navigation flex mode="seamed">
-        <core-toolbar>app-router-examples</core-toolbar>
-        <template repeat="{{perspective in perspectives}}">
-          <core-item active?="{{perspective == currentPerspective}}"icon="{{perspective.icon}}" src="{{perspective.image}}" label="{{perspective.label}}" on-tap="{{perspectiveTapped}}"><a is="pushstate-anchor" href="{{perspective.href}}"></a></core-item>
-        </template>
-      </core-header-panel>
-      <div tool>
-        <div>{{currentPerspective.label}}</div>
-      </div>
-      <div class="content">
-        <app-router mode="pushstate" trailingSlash="ignore" on-state-change="{{appRouterStateChange}}">
+    <core-style ref="coverimgstyle"></core-style>
+    <core-drawer-panel id="drawerPanel" narrow="{{narrow}}">
+      <core-header-panel mode="scroll" drawer>
+        <core-toolbar id="coverImg">
+          {{branding.name}}
+        </core-toolbar>
+        <core-menu selected="{{selectedPerspectiveIndex}}" excludedLocalNames="div" on-core-select="{{onPerspectiveSelect}}" on-core-activate="{{onPerspectiveTapped}}">
           <template repeat="{{perspective in perspectives}}">
-            <app-route path="{{perspective.path}}" import="{{perspective.page}}"/></app-route>
+            <paper-item>
+              <core-icon icon="{{perspective.icon}}"></core-icon>
+              {{perspective.label}}
+            </paper-item>
           </template>
-        </app-router>
-      </div>
-    </core-scaffold>
+        </core-menu>
+      </core-header-panel>
+
+      <core-scroll-header-panel main condenses keepCondensedHeader on-trackstart="{{onRefreshStart}}"  on-tracky="{{onMainAreaTrack}}" on-trackend="{{onRefreshUp}}">
+        <core-toolbar class="{{ {'core-narrow': narrow} | tokenList }}">
+          <paper-fab icon="{{currentPerspective.icon}}" class="blue" mini core-drawer-toggle></paper-fab>
+          <div flex></div>
+          <span class="bottom indent title">
+            {{currentPerspective.label}}
+          </span>
+        </core-toolbar>
+        <div content>
+          <app-router mode="pushstate" trailingSlash="ignore" on-state-change="{{appRouterStateChange}}" id="perspectiveRouter">
+            <template repeat="{{perspective in perspectives}}">
+              <app-route path="{{perspective.path}}" element="{{perspective.element}}"></app-route>
+            </template>
+          </app-router>
+         </div>
+      </core-scroll-header-panel>
+    </core-drawer-panel>
   </template>
 
   <!-- build:js scripts/app.js -->
   <script src="/bower_components/underscore/underscore.js"></script>
   <script src="/scripts/app.js"></script>
+  <script src="/scripts/vendor.js"></script>
   <!-- endbuild-->
 </body>
 
