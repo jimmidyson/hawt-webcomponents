@@ -10,6 +10,7 @@ install:
 before_script: grunt build
 after_success:
   - cd dist
+  - npm install
   - git init
   - git config --global user.email "travis@localhost.localdomain"
   - git config --global user.name "Travis CI"
