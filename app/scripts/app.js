@@ -10,24 +10,35 @@
 
     template.router = document.querySelector('#perspectiveRouter');
 
-    var tmpPerspectives = _.sortBy(template.perspectives, function(p) {return -(p.href.length);});
+    template.router.init();
+
+    var tmpPerspectives = _.sortBy(template.perspectives, function(p) {return -((p.href || p.redirect).length);});
+    var hrefOrRedirect = 'href';
     for (var i = 0; i < tmpPerspectives.length; i++) {
-      if (location.pathname.slice(0, tmpPerspectives[i].href.length) === tmpPerspectives[i].href) {
+      var href = tmpPerspectives[i].href;
+      if (!href) {
+        href = tmpPerspectives[i].redirect;
+        hrefOrRedirect = 'redirect';
+      }
+      if (location.pathname.slice(0, href.length) === href) {
         template.currentPerspective = tmpPerspectives[i];
         break;
       }
     }
 
-    template.selectedPerspectiveIndex = _.indexOf(_.pluck(template.perspectives, 'href'), template.currentPerspective.href);
+    if (template.currentPerspective) {
+      template.selectedPerspectiveIndex = _.indexOf(_.pluck(template.perspectives, hrefOrRedirect), template.currentPerspective[hrefOrRedirect]);
+    } else {
+      template.currentPerspective = template.perspectives[0];
+      template.selectedPerspectiveIndex = 0;
+      template.router.go(template.currentPerspective.href || template.currentPerspective.redirect);
+    }
   });
 
   template.onPerspectiveSelect = function(event, detail) {
     if (detail.isSelected) {
       this.$ && this.$.drawerPanel.togglePanel();
       template.currentPerspective = detail.item.templateInstance.model.perspective;
-      if (location.pathname === template.currentPerspective.href) {
-        template.router.go(template.currentPerspective.href);
-      }
     }
   }
 

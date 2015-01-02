@@ -1,0 +1,13 @@
+<polymer-element name="kubernetes-perspective" hidden>
+  <script>
+    (function() {
+      'use strict';
+
+      window.Perspectives.push(
+        {label: "Kubernetes", href: '/kubernetes', element: 'kubernetes-perspective', path: '/', image: '/images/kubernetes.svg'}
+      );
+
+      Polymer({});
+    })();
+  </script>
+</polymer-element>
