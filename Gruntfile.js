@@ -250,7 +250,7 @@ module.exports = function (grunt) {
           src: 'server.js',
           dest: '<%= yeoman.dist %>/server.js'
         }, {
-          src: 'package.json',
+          src: 'package-openshift.json',
           dest: '<%= yeoman.dist %>/package.json'
         }]
       },
