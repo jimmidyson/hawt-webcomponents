@@ -249,6 +249,9 @@ module.exports = function (grunt) {
         }, {
           src: 'server.js',
           dest: '<%= yeoman.dist %>/server.js'
+        }, {
+          src: 'package.json',
+          dest: '<%= yeoman.dist %>/package.json'
         }]
       },
       styles: {
