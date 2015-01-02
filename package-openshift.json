@@ -4,6 +4,8 @@
   },
   "main": "server.js",
   "dependencies": {
-    "express": "~4.10.6"
+    "express": "~4.10.6",
+    "morgan": "~1.5.1",
+    "compression": "~1.3.0"
   }
 }
