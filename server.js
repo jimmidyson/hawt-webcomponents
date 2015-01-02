@@ -6,9 +6,9 @@ var port    = process.env.OPENSHIFT_NODEJS_PORT || 9000;
 var express = require('express')
 var app = express();
 
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(__dirname));
 app.use('/*', function(req, res){
-  res.sendFile(__dirname + '/dist/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.listen(port, ipaddr);
