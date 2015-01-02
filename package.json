@@ -1,7 +1,9 @@
 {
   "name": "hawt-webcomponents",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "express": "~4.10.6"
+  },
   "devDependencies": {
     "grunt": "^0.4.1",
     "grunt-sass": "^0.14.0",

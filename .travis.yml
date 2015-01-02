@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-    - "0.10"
+  - '0.10'
 before_install: npm install -g grunt-cli bower
 install:
   - npm install
@@ -8,8 +8,24 @@ install:
   - bower install
   - bower prune
 before_script: grunt build
+after_success:
+  - cd dist
+  - git init
+  - git config --global user.email "travis@localhost.localdomain"
+  - git config --global user.name "Travis CI"
+  - git add --all
+  - git commit -am "Travis change"
 cache:
   directories:
     - node_modules/
     - app/bower_components/
 sudo: false
+deploy:
+  provider: openshift
+  user: jdyson@redhat.com
+  password:
+    secure: EgiiKJ3vjviWo9FbA8e7CUaLLctxRjQdQtw4SsYr2ksg4CezrMPN2t+SFJLLhHHZzxGkbP5UBInjIKglImYRZdewLcc2oOmd1KU4iVev1L2UfRnRudJ44eswxxMOzD3V0pCe/DQUCzIeErIg+8uSXFy0gfNPB9atgmcmZd6AkwU=
+  app: hawtiov2
+  domain: jdyson
+  on:
+    repo: jimmidyson/hawt-webcomponents
