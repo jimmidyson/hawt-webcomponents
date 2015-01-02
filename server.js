@@ -10,8 +10,8 @@ app.use(express.logger());
 app.use(express.compress());
 
 app.use(express.static(__dirname));
-app.all('/*', function(req, res){
-  res.sendfile(__dirname + '/index.html');
+app.use('/*', function(req, res){
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.listen(port, ipaddr);
