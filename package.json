@@ -2,7 +2,7 @@
   "name": "hawt-webcomponents",
   "version": "0.0.0",
   "dependencies": {
-    "express": "~4.10.6"
+    "express": "^3.18.6"
   },
   "devDependencies": {
     "grunt": "^0.4.1",
