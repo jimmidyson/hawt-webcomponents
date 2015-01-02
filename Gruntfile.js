@@ -246,6 +246,9 @@ module.exports = function (grunt) {
             'images/{,*/}*.{webp,gif}',
             'bower_components/**'
           ]
+        }, {
+          src: 'server.js',
+          dest: '<%= yeoman.dist %>/server.js'
         }]
       },
       styles: {
