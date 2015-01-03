@@ -6,6 +6,8 @@ var port    = process.env.OPENSHIFT_NODEJS_PORT || 9000;
 var express = require('express')
 var app = express();
 
+app.enable("trust proxy");
+
 var morgan = require('morgan');
 app.use(morgan('combined'));
 
