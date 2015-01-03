@@ -21,7 +21,6 @@ cache:
   directories:
     - node_modules/
     - app/bower_components/
-    - dist/node_modules/
 sudo: false
 deploy:
   provider: openshift
