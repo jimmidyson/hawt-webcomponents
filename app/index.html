@@ -9,16 +9,23 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-  <!-- build:js /bower_components/webcomponentsjs/webcomponents.min.js -->
-  <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
-  <!-- endbuild -->
+  <!-- build:css /styles/main.css -->
+  <link rel="stylesheet" href="/styles/main.css" shim-shadowdom>
+  <!-- endbuild-->
+
+  <!-- conditionally load polyfills - thanks to https://github.com/geelen/x-gif -->
+  <script>
+    if ('registerElement' in document
+      && 'createShadowRoot' in HTMLElement.prototype
+      && 'import' in document.createElement('link')
+      && 'content' in document.createElement('template')) {
+    } else {
+      document.write('<script src="/bower_components/webcomponentsjs/webcomponents.min.js"><\/script>');
+    }
+  </script>
 
   <!-- build:vulcanized /elements/elements.vulcanized.html -->
   <link rel="import" href="/elements/elements.html">
-  <!-- endbuild-->
-
-  <!-- build:css /styles/main.css -->
-  <link rel="stylesheet" href="/styles/main.css" shim-shadowdom>
   <!-- endbuild-->
 
 </head>
