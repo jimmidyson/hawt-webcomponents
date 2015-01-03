@@ -11,6 +11,7 @@ before_script: grunt build
 after_success:
   - cd dist
   - npm install
+  - npm prune
   - git init
   - git config --global user.email "travis@localhost.localdomain"
   - git config --global user.name "Travis CI"
@@ -20,6 +21,7 @@ cache:
   directories:
     - node_modules/
     - app/bower_components/
+    - dist/node_modules/
 sudo: false
 deploy:
   provider: openshift
