@@ -295,6 +295,28 @@ module.exports = function (grunt) {
           threshold: 80
         }
       }
+    },
+    appcache: {
+      options: {
+        basePath: 'dist'
+      },
+      all: {
+        dest: 'dist/manifest.appcache',
+        cache: {
+          patterns: [
+            'dist/**/*',
+            '!dist/bower_components/**/*',
+            'dist/bower_components/webcomponentsjs/webcomponents.min.js',
+            '!dist/elements/**/*',
+            'dist/elements/*.vulcanized.*',
+            '!dist/node_modules/**/*',
+            '!dist/server.js',
+            '!dist/package.json'
+          ],
+          literals: '/'            // insert '/' as is in the "CACHE:" section
+        },
+        network: '*',
+      }
     }
   });
 
@@ -334,7 +356,8 @@ module.exports = function (grunt) {
     'uglify',
     'vulcanize',
     'usemin',
-    'minifyHtml'
+    'minifyHtml',
+    'appcache'
   ]);
 
   grunt.registerTask('default', [
