@@ -216,6 +216,11 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>/images',
           src: '{,*/}*.{png,jpg,jpeg,svg}',
           dest: '<%= yeoman.dist %>/images'
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: '*.{png,jpg,jpeg,svg}',
+          dest: '<%= yeoman.dist %>/'
         }]
       }
     },
@@ -340,22 +345,27 @@ module.exports = function (grunt) {
         network: '*',
       }
     },
-    crx: {
-      hawtiov2: {
-        src: [
-          'dist/**/*',
-          '!dist/bower_components/**/*',
-          'dist/bower_components/webcomponentsjs/webcomponents.min.js',
-          '!dist/elements/**/*',
-          'dist/elements/*.vulcanized.*',
-          '!dist/node_modules/**/*',
-          '!dist/server.js',
-          '!dist/package.json',
-          '!.{git,svn}'
-        ],
-        dest: 'crx/',
-        zipDest: 'crx/',
-        privateKey: (process.env.CRX_KEY || 'key.pem')
+    compress: {
+      crx: {
+        options: {
+          archive: 'hawtiov2-crx.zip'
+        },
+        files: [{
+          src: [
+            '**/*',
+            '!bower_components/**/*',
+            'bower_components/webcomponentsjs/webcomponents.min.js',
+            '!elements/**/*',
+            'elements/*.vulcanized.*',
+            '!node_modules/**/*',
+            '!server.js',
+            '!package.json',
+            '!.{git,svn}'
+          ],
+          expand: true,
+          cwd: 'dist/',
+          dest: '/'
+        }]
       }
     },
     version: {
