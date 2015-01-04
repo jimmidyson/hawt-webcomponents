@@ -56,10 +56,10 @@
       <core-scroll-header-panel main condenses keepCondensedHeader on-trackstart="{{onRefreshStart}}"  on-tracky="{{onMainAreaTrack}}" on-trackend="{{onRefreshUp}}">
         <core-toolbar class="{{ {'core-narrow': narrow} | tokenList }}">
           <template if="{{currentPerspective.icon}}">
-            <paper-fab icon="{{currentPerspective.icon}}" class="blue" mini core-drawer-toggle></paper-fab>
+            <paper-fab icon="{{currentPerspective.icon}}" class="grey" mini core-drawer-toggle></paper-fab>
           </template>
           <template if="{{currentPerspective.image}}">
-            <paper-fab src="{{currentPerspective.image}}" class="blue" mini core-drawer-toggle></paper-fab>
+            <paper-fab src="{{currentPerspective.image}}" class="grey" mini core-drawer-toggle></paper-fab>
           </template>
           <div flex></div>
           <span class="bottom indent title">
