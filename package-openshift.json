@@ -1,4 +1,9 @@
 {
+  "name": "hawtiov2",
+  "version": "0.0.2",
+  "dependencies": {
+    "express": "~4.10.6"
+  },
   "scripts": {
     "start": "node server.js"
   },

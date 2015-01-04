@@ -27,6 +27,8 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     yeoman: yeomanConfig,
+    pkg: grunt.file.readJSON('package.json'),
+    manifest: grunt.file.readJSON('manifest.json'),
     watch: {
       options: {
         nospawn: true,
@@ -244,6 +246,7 @@ module.exports = function (grunt) {
             '*.html',
             'pages/**',
             'elements/**',
+            'fonts/**',
             '!elements/**/*.scss',
             'images/{,*/}*.{webp,gif}',
             'bower_components/**'
@@ -252,8 +255,14 @@ module.exports = function (grunt) {
           src: 'server.js',
           dest: '<%= yeoman.dist %>/server.js'
         }, {
+          src: 'background.js',
+          dest: '<%= yeoman.dist %>/background.js'
+        }, {
           src: 'package-openshift.json',
           dest: '<%= yeoman.dist %>/package.json'
+        }, {
+          src: 'manifest.json',
+          dest: '<%= yeoman.dist %>/manifest.json'
         }]
       },
       styles: {
@@ -296,6 +305,16 @@ module.exports = function (grunt) {
         }
       }
     },
+    replace: {
+      dist: {
+        src: ['dist/index.html'],
+        overwrite: true,
+        replacements: [{
+          from: /<html([^>]*)>/,
+          to: '<html$1 manifest="/manifest.appcache">'
+        }]
+      }
+    },
     appcache: {
       options: {
         basePath: 'dist'
@@ -311,11 +330,40 @@ module.exports = function (grunt) {
             'dist/elements/*.vulcanized.*',
             '!dist/node_modules/**/*',
             '!dist/server.js',
-            '!dist/package.json'
+            '!dist/background.js',
+            '!dist/package.json',
+            '!dist/manifest.json',
+            '!**/*.map'
           ],
           literals: '/'            // insert '/' as is in the "CACHE:" section
         },
         network: '*',
+      }
+    },
+    crx: {
+      hawtiov2: {
+        src: [
+          'dist/**/*',
+          '!dist/bower_components/**/*',
+          'dist/bower_components/webcomponentsjs/webcomponents.min.js',
+          '!dist/elements/**/*',
+          'dist/elements/*.vulcanized.*',
+          '!dist/node_modules/**/*',
+          '!dist/server.js',
+          '!dist/package.json',
+          '!.{git,svn}'
+        ],
+        dest: 'crx/',
+        zipDest: 'crx/',
+        privateKey: (process.env.CRX_KEY || 'key.pem')
+      }
+    },
+    version: {
+      hawtiov2: {
+        src: ['package.json', 'manifest.json', 'package-openshift.json'],
+        options: {
+          release: (process.env.RELEASE || 'patch')
+        }
       }
     }
   });
@@ -357,7 +405,8 @@ module.exports = function (grunt) {
     'vulcanize',
     'usemin',
     'minifyHtml',
-    'appcache'
+    'appcache',
+    'replace:dist'
   ]);
 
   grunt.registerTask('default', [
