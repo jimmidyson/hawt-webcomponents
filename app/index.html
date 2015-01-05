@@ -28,7 +28,7 @@
 
   <core-style id="coverimgstyle">
     #coverImg::after {
-      background-image: url({{g.coverImg}});
+      background-image: url({{g.logo}});
     }
   </core-style>
   <template id="t" is="auto-binding">
@@ -55,14 +55,14 @@
 
       <core-scroll-header-panel main condenses keepCondensedHeader on-trackstart="{{onRefreshStart}}"  on-tracky="{{onMainAreaTrack}}" on-trackend="{{onRefreshUp}}">
         <core-toolbar class="{{ {'core-narrow': narrow} | tokenList }}">
-          <template if="{{currentPerspective.icon}}">
-            <paper-fab icon="{{currentPerspective.icon}}" class="grey" mini core-drawer-toggle></paper-fab>
-          </template>
-          <template if="{{currentPerspective.image}}">
-            <paper-fab src="{{currentPerspective.image}}" class="grey" mini core-drawer-toggle></paper-fab>
-          </template>
-          <div flex></div>
-          <span class="bottom indent title">
+        <paper-icon-button src="/images/hawtio_icon.png" core-drawer-toggle></paper-icon-button>
+          <span class="title">
+            <template if="{{!narrow && currentPerspective.icon}}">
+              <core-icon icon="{{currentPerspective.icon}}"></core-icon>
+            </template>
+            <template if="{{!narrow && currentPerspective.image}}">
+              <core-icon src="{{currentPerspective.image}}"></core-icon>
+            </template>
             {{currentPerspective.label}}
           </span>
         </core-toolbar>
