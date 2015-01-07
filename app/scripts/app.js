@@ -3,8 +3,8 @@
 
   var template = document.querySelector('#t');
 
-  template.addEventListener('template-bound', function(e) {
-    template.perspectives = window.Perspectives;
+  template.addEventListener('template-bound', function() {
+    template.perspectives = this.$.perspectives.perspectives;
 
     template.branding = window.Branding;
 
@@ -31,20 +31,18 @@
     } else {
       template.currentPerspective = template.perspectives[0];
       template.selectedPerspectiveIndex = 0;
-      template.router.go(template.currentPerspective.href || template.currentPerspective.redirect);
     }
   });
 
   template.onPerspectiveSelect = function(event, detail) {
     if (detail.isSelected) {
-      this.$ && this.$.drawerPanel.togglePanel();
+      if (this.$) {
+        this.$.drawerPanel.togglePanel();
+      }
       template.currentPerspective = detail.item.templateInstance.model.perspective;
     }
-  }
-
-  template.onPerspectiveTapped = function(event, detail) {
-    template.router.go(template.currentPerspective.href);
-  }
+    template.router.go(template.currentPerspective.href || template.currentPerspective.redirect);
+  };
 
 // wrap document so it plays nice with other libraries
 // http://www.polymer-project.org/platform/shadow-dom.html#wrappers

@@ -33,6 +33,7 @@
   </core-style>
   <template id="t" is="auto-binding">
     <core-style ref="coverimgstyle"></core-style>
+    <hawt-perspectives id="perspectives"></hawt-perspectives>
     <core-drawer-panel id="drawerPanel" narrow="{{narrow}}">
       <core-header-panel mode="scroll" drawer>
         <core-toolbar id="coverImg">
@@ -69,7 +70,15 @@
         <div content>
           <app-router mode="pushstate" trailingSlash="ignore" on-state-change="{{appRouterStateChange}}" id="perspectiveRouter" init="manual">
             <template repeat="{{perspective in perspectives}}">
-              <app-route path="{{perspective.path}}" element="{{perspective.element}}" redirect="{{perspective.redirect}}"></app-route>
+              <template if="{{perspective.import}}">
+                <app-route path="{{perspective.path}}" import="{{perspective.import}}"></app-route>
+              </template>
+              <template if="{{perspective.element}}">
+                <app-route path="{{perspective.path}}" element="{{perspective.element}}"></app-route>
+              </template>
+              <template if="{{perspective.redirect}}">
+                <app-route path="{{perspective.path}}" redirect="{{perspective.redirect}}"></app-route>
+              </template>
             </template>
           </app-router>
          </div>

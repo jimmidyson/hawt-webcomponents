@@ -1,0 +1,23 @@
+<polymer-element name="hawt-perspectives" hidden>
+<script>
+(function() {
+  var perspectives = [];
+  var perspectivesMap = {};
+
+  Polymer({
+    ready: function() {
+      this.perspectives = perspectives;
+    },
+    getPerspective: function(id) { return perspectivesMap[id]; },
+    addPerspective: function(perspective) {
+      if (perspectivesMap[perspective.id]) {
+        console.error("Perspective has already been added with id: " + perspective.id);
+      } else {
+        perspectives.push(perspective);
+        perspectivesMap[perspective.id] = perspective;
+      }
+    }
+  });
+})();
+</script>
+</polymer-element>
