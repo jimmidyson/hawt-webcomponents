@@ -329,6 +329,7 @@ module.exports = function (grunt) {
         cache: {
           patterns: [
             'dist/**/*',
+            '!dist/pages/**/*',
             '!dist/bower_components/**/*',
             'dist/bower_components/webcomponentsjs/webcomponents.min.js',
             '!dist/elements/**/*',
@@ -353,6 +354,7 @@ module.exports = function (grunt) {
         files: [{
           src: [
             '**/*',
+            '!pages/**/*',
             '!bower_components/**/*',
             'bower_components/webcomponentsjs/webcomponents.min.js',
             '!elements/**/*',
