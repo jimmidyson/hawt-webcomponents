@@ -54,7 +54,7 @@
         </core-menu>
       </core-header-panel>
 
-      <core-scroll-header-panel main condenses keepCondensedHeader on-trackstart="{{onRefreshStart}}"  on-tracky="{{onMainAreaTrack}}" on-trackend="{{onRefreshUp}}">
+      <core-scroll-header-panel fixed="true" main on-trackstart="{{onRefreshStart}}"  on-tracky="{{onMainAreaTrack}}" on-trackend="{{onRefreshUp}}">
         <core-toolbar class="{{ {'core-narrow': narrow} | tokenList }}">
         <paper-icon-button src="/images/hawtio_icon.png" core-drawer-toggle></paper-icon-button>
           <span class="title">
