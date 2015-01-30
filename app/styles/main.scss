@@ -7,7 +7,7 @@ body {
 }
 
 #drawerPanel:not([narrow]) core-scroll-header-panel [content] {
-  padding: 30px 0;
+  padding: 20px;
 }
 
 #drawerPanel core-header-panel {
@@ -28,14 +28,14 @@ body {
 
 paper-item core-icon {
   margin-right: 24px !important;
-}
 
-paper-item.core-selected {
-  background-color: #eee;
-}
+  &.core-selected {
+    background-color: #eee;
+  }
 
-paper-item.core-selected core-icon {
-  color: #757575;
+  &.core-selected core-icon {
+    color: #757575;
+  }
 }
 
 #coverImg::after {

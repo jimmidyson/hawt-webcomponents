@@ -1,120 +1,47 @@
 <polymer-element name="kubernetes-overview">
   <template>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
-  <p>Hello</p>
+    <style>
+      .pod {
+        background-color: #fafafa;
+        padding: 16px;
+        border-bottom: 1px solid #e0e0e0;
+        will-change: transform, opacity;
+      }
+      .pod[selected] {
+        background-color: silver;
+      }
+    </style>
+
+    <core-ajax auto url="https://localhost:8443/api/v1beta2/pods" handleAs="json" response="{{pods}}"></core-ajax>
+
+    <core-selector id="podlist" multi selectedAttribute="selected"
+                    selected="{{selectedPods}}">
+      <template repeat="{{pod in pods.items}}">
+        <div class="pod" layout horizontal>
+          <div flex layout horizontal>
+            <header layout vertical flex>
+              <span layout horizontal center justified>
+                <span class="name">
+                  {{pod.id}}
+                </span>
+              </span>
+            </header>
+          </div>
+        </div>
+      </template>
+    </core-selector>
+                                                                                                                                                               </core-selector>
   </template>
 
   <script>
     (function() {
       'use strict';
 
-      Polymer({});
+      Polymer({
+        updatePods: function(pods) {
+          console.log(pods);
+        }
+      });
     })();
   </script>
 </polymer-element>
