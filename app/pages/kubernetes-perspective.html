@@ -9,7 +9,14 @@
     (function() {
       'use strict';
 
-      var perspective = {id: 'kubernetes', label: "Kubernetes", href: '/kubernetes', element: 'kubernetes-overview', path: '/kubernetes', image: '/images/kubernetes.svg'};
+      var perspective = {
+        id: 'kubernetes',
+        label: "Kubernetes",
+        href: '/kubernetes',
+        element: 'kubernetes-overview',
+        path: '/kubernetes',
+        image: '/images/kubernetes.svg'
+      };
 
       if (!document.querySelector('kubernetes-perspective')) {
         var p = document.createElement("kubernetes-perspective");

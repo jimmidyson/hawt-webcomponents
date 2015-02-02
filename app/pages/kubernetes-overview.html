@@ -1,3 +1,5 @@
+<link rel="import" href="kubernetes-perspective.html"/>
+
 <polymer-element name="kubernetes-overview">
   <template>
     <style>
@@ -7,23 +9,36 @@
         border-bottom: 1px solid #e0e0e0;
         will-change: transform, opacity;
       }
+
       .pod[selected] {
         background-color: silver;
       }
     </style>
 
-    <core-ajax auto url="https://localhost:8443/api/v1beta2/pods" handleAs="json" response="{{pods}}"></core-ajax>
+    <core-localstorage name="kubernetes-apiserver" value="{{kubernetesApiServer}}"></core-localstorage>
 
-    <core-selector id="podlist" multi selectedAttribute="selected"
-                    selected="{{selectedPods}}">
+    <core-ajax auto url="{{kubernetesApiServer}}/api/v1beta2/pods" handleAs="json" response="{{pods}}" on-core-error="{{onError}}"></core-ajax>
+
+    <paper-toast id="errorToast" text="{{error.message}}"></paper-toast>
+
+    <paper-input label="Kubernetes API Server" committedValue="{{kubernetesApiServer}}" floatingLabel="true" style="width: 100%"></paper-input>
+
+    <core-selector selectedAttribute="selected" selected="{{selectedPods}}" multi>
       <template repeat="{{pod in pods.items}}">
         <div class="pod" layout horizontal>
           <div flex layout horizontal>
             <header layout vertical flex>
-              <span layout horizontal center justified>
+              <span layout horizontal>
                 <span class="name">
                   {{pod.id}}
                 </span>
+                <span class="ip">
+                  ({{pod.currentState.podIP}})
+                </span>
+                <span class="host">
+                  ({{pod.currentState.host}})
+                </span>
+              </span>
               </span>
             </header>
           </div>
@@ -38,8 +53,9 @@
       'use strict';
 
       Polymer({
-        updatePods: function(pods) {
-          console.log(pods);
+        kubernetesApiServer: 'https://localhost:8443',
+        onError: function(error) {
+          console.log('hello');
         }
       });
     })();

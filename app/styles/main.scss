@@ -38,6 +38,10 @@ paper-item core-icon {
   }
 }
 
+paper-input {
+  width: 100%;
+}
+
 #coverImg::after {
   content: '';
   position: absolute;
