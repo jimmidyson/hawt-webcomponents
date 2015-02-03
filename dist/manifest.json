@@ -1,0 +1,16 @@
+{
+  "name": "Hawtio V2",
+  "version": "0.0.4",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "icons": {
+    "16": "logo-16px.png",
+    "48": "logo-48px.png",
+    "128": "logo-128px.png"
+  },
+  "manifest_version": 2
+}

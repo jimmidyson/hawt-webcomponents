@@ -1,0 +1,31 @@
+CACHE MANIFEST
+# rev 1 - 2015-02-03T10:09:50.876Z
+
+CACHE:
+404.html
+favicon.ico
+fonts/RobotoDraft_italic_400_default.woff
+fonts/RobotoDraft_italic_700_default.woff
+fonts/RobotoDraft_normal_100_default.woff
+fonts/RobotoDraft_normal_300_default.woff
+fonts/RobotoDraft_normal_400_default.woff
+fonts/RobotoDraft_normal_500_default.woff
+fonts/RobotoDraft_normal_700_default.woff
+fonts/RobotoDraft_normal_900_default.woff
+images/hawtio_icon.png
+images/hawtio_logo.svg
+images/kubernetes.svg
+logo-128px.png
+logo-16px.png
+logo-48px.png
+robots.txt
+scripts/app.js
+scripts/conditional-webcomponents.js
+styles/main.css
+bower_components/webcomponentsjs/webcomponents.min.js
+elements/elements.vulcanized.html
+elements/elements.vulcanized.js
+/
+
+NETWORK:
+*
