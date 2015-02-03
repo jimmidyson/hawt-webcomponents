@@ -22,12 +22,12 @@ cache:
     - node_modules/
     - app/bower_components/
 sudo: false
-deploy:
-  provider: openshift
-  user: jdyson@redhat.com
-  password:
-    secure: EgiiKJ3vjviWo9FbA8e7CUaLLctxRjQdQtw4SsYr2ksg4CezrMPN2t+SFJLLhHHZzxGkbP5UBInjIKglImYRZdewLcc2oOmd1KU4iVev1L2UfRnRudJ44eswxxMOzD3V0pCe/DQUCzIeErIg+8uSXFy0gfNPB9atgmcmZd6AkwU=
-  app: hawtiov2
-  domain: jdyson
-  on:
-    repo: jimmidyson/hawt-webcomponents
+#deploy:
+#  provider: openshift
+#  user: jdyson@redhat.com
+#  password:
+#    secure: EgiiKJ3vjviWo9FbA8e7CUaLLctxRjQdQtw4SsYr2ksg4CezrMPN2t+SFJLLhHHZzxGkbP5UBInjIKglImYRZdewLcc2oOmd1KU4iVev1L2UfRnRudJ44eswxxMOzD3V0pCe/DQUCzIeErIg+8uSXFy0gfNPB9atgmcmZd6AkwU=
+#  app: hawtiov2
+#  domain: jdyson
+#  on:
+#    repo: jimmidyson/hawt-webcomponents
