@@ -15,15 +15,9 @@
       }
     </style>
 
-    <core-localstorage name="kubernetes-apiserver" value="{{kubernetesApiServer}}"></core-localstorage>
-
-    <core-ajax auto url="{{kubernetesApiServer}}/api/v1beta2/pods" handleAs="json" response="{{pods}}" on-core-error="{{onError}}"></core-ajax>
+    <core-ajax auto url="/api/v1beta2/pods" handleAs="json" response="{{pods}}" on-core-error="{{onError}}"></core-ajax>
 
     <paper-toast id="errorToast" text="{{errorMessage}}"></paper-toast>
-
-    <paper-input-decorator label="Kubernetes API Server" error="Input is required!" autovalidate layout vertical floatinglabel>
-      <input is="core-input" value="{{kubernetesApiServer}}" required>
-    </paper-input-decorator>
 
     <core-selector selectedAttribute="selected" selected="{{selectedPods}}" multi>
       <template repeat="{{pod in pods.items}}">
@@ -55,7 +49,6 @@
       'use strict';
 
       Polymer({
-        kubernetesApiServer: 'https://localhost:8443',
         onError: function(error) {
           this.errorMessage = error.detail.xhr.responseText;
           this.$.errorToast.show();
