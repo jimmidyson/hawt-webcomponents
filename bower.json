@@ -2,48 +2,14 @@
   "name": "hawt-webcomponents",
   "version": "0.0.0",
   "dependencies": {
-    "core-elements": "Polymer/core-elements#0.8-preview",
-    "paper-elements": "Polymer/paper-elements#0.8-preview"
+    "core-elements": "Polymer/core-elements#^0.5.4",
+    "paper-elements": "Polymer/paper-elements#^0.5.4",
+    "traceur": "~0.0.87",
+    "es6-module-loader": "~0.15.0",
+    "underscore": "~1.8.2",
+    "backbone": "~1.1.2"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#master"
-  },
-  "resolutions": {
-    "core-ajax": "0.8-preview",
-    "core-toolbar": "0.8-preview",
-    "core-header-panel": "0.8-preview",
-    "polymer": "0.8-preview",
-    "core-selector": "0.8-preview",
-    "core-icons": "0.8-preview",
-    "core-transition": "master",
-    "core-resizable": "0.8-preview",
-    "core-collapse": "0.8-preview",
-    "core-drawer-panel": "0.8-preview",
-    "core-image": "0.8-preview",
-    "core-media-query": "0.8-preview",
-    "core-meta": "0.8-preview",
-    "core-overlay": "0.8-preview",
-    "core-pages": "0.8-preview",
-    "core-icon": "0.8-preview",
-    "core-component-page": "master",
-    "webcomponentsjs": "master",
-    "core-iconset-svg": "0.8-preview",
-    "core-iconset": "0.8-preview",
-    "paper-ripple": "0.8-preview",
-    "paper-shadow": "0.8-preview",
-    "font-roboto": "master",
-    "layout": "master",
-    "core-input": "master",
-    "core-style": "master",
-    "core-a11y-keys": "master",
-    "core-focusable": "master",
-    "core-menu": "master",
-    "core-range": "master",
-    "core-dropdown": "master",
-    "core-animation": "master",
-    "core-icon-button": "master",
-    "core-item": "master",
-    "core-selection": "master",
-    "web-animations-js": "1.0.6"
+    "web-component-tester": "Polymer/web-component-tester#^2.2.6"
   }
 }

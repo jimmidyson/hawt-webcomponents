@@ -27,14 +27,16 @@ var styleTask = function (stylesPath, srcs) {
   return gulp.src(srcs.map(function(src) {
       return path.join('app', stylesPath, src);
     }))
+    .pipe($.sourcemaps.init())
     .pipe($.changed(stylesPath, {extension: '.scss'}))
-    .pipe($.rubySass({
+    .pipe($.sass({
         style: 'expanded',
         precision: 10
       })
       .on('error', console.error.bind(console))
     )
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('.tmp/' + stylesPath))
     .pipe($.if('*.css', $.cssmin()))
     .pipe(gulp.dest('dist/' + stylesPath))
@@ -48,6 +50,15 @@ gulp.task('styles', function () {
 
 gulp.task('elements', function () {
   return styleTask('elements', ['**/*.css', '**/*.scss']);
+});
+
+gulp.task('traceur', function() {
+  return gulp.src(['app/elements/**/*.js'])
+    .pipe($.sourcemaps.init())
+    .pipe($.traceur())
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('.tmp/elements/'))
+    .pipe(gulp.dest('dist/elements/'));
 });
 
 // Lint JavaScript
@@ -86,8 +97,8 @@ gulp.task('copy', function () {
   }).pipe(gulp.dest('dist'));
 
   var bower = gulp.src([
-    'bower_components/**/*'
-  ]).pipe(gulp.dest('dist/bower_components'));
+    'components/**/*'
+  ]).pipe(gulp.dest('dist/components'));
 
   var elements = gulp.src(['app/elements/**/*.html'])
     .pipe(gulp.dest('dist/elements'));
@@ -150,7 +161,7 @@ gulp.task('vulcanize', function () {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
-gulp.task('serve', ['styles', 'elements'], function () {
+gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
   browserSync({
     notify: false,
     // Run as an https by uncommenting 'https: true'
@@ -160,7 +171,7 @@ gulp.task('serve', ['styles', 'elements'], function () {
     server: {
       baseDir: ['.tmp', 'app'],
       routes: {
-        '/bower_components': 'bower_components'
+        '/components': 'components'
       }
     }
   });
@@ -168,7 +179,7 @@ gulp.task('serve', ['styles', 'elements'], function () {
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/elements/**/*.{scss,css}'], ['elements', reload]);
-  gulp.watch(['app/{scripts,elements}/**/*.js'], ['jshint']);
+  gulp.watch(['app/{scripts,elements}/**/*.js'], ['traceur', reload]);
   gulp.watch(['app/images/**/*'], reload);
 });
 
@@ -188,6 +199,7 @@ gulp.task('serve:dist', ['default'], function () {
 gulp.task('default', ['clean'], function (cb) {
   runSequence(
     ['copy', 'styles'],
+    'traceur',
     'elements',
     ['jshint', 'images', 'fonts', 'html'],
     'vulcanize',
