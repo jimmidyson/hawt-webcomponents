@@ -30,7 +30,6 @@
     "gulp-vulcanize": "^5.0.0",
     "jshint-stylish": "^1.0.1",
     "merge-stream": "^0.1.6",
-    "morgan": "^1.5.1",
     "opn": "^1.0.0",
     "proxy-middleware": "^0.11.0",
     "psi": "^1.0.4",

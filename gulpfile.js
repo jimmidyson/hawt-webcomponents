@@ -9,7 +9,6 @@ var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
 var merge = require('merge-stream');
-var morgan = require('morgan');
 var path = require('path');
 var proxy = require('proxy-middleware');
 var url = require('url');
@@ -57,12 +56,12 @@ gulp.task('elements', function () {
 });
 
 gulp.task('traceur', function() {
-  return gulp.src(['app/elements/**/*.js'])
+  return gulp.src(['app/**/*.js'])
     .pipe($.sourcemaps.init())
     .pipe($.traceur())
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('.tmp/elements/'))
-    .pipe(gulp.dest('dist/elements/'));
+    .pipe(gulp.dest('.tmp/'))
+    .pipe(gulp.dest('dist/'));
 });
 
 // Lint JavaScript
@@ -191,7 +190,7 @@ gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
       routes: {
         '/components': 'components'
       },
-      middleware: [morgan('combined')].concat(proxyRoutes())
+      middleware: proxyRoutes()
     }
   });
 
@@ -212,7 +211,7 @@ gulp.task('serve:dist', ['default'], function () {
     //       will present a certificate warning in the browser.
     // https: true,
     server: 'dist',
-    middleware: [morgan('combined')].concat(proxyRoutes())
+    middleware: proxyRoutes()
   });
 });
 
