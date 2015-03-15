@@ -13,6 +13,7 @@ var path = require('path');
 var proxy = require('proxy-middleware');
 var url = require('url');
 var urljoin = require('url-join');
+var historyApiFallback = require('connect-history-api-fallback');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -190,7 +191,7 @@ gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
       routes: {
         '/components': 'components'
       },
-      middleware: proxyRoutes()
+      middleware: proxyRoutes().concat(historyApiFallback)
     }
   });
 
@@ -211,7 +212,7 @@ gulp.task('serve:dist', ['default'], function () {
     //       will present a certificate warning in the browser.
     // https: true,
     server: 'dist',
-    middleware: proxyRoutes()
+    middleware: proxyRoutes().concat(historyApiFallback)
   });
 });
 
