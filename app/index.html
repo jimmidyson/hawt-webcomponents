@@ -25,21 +25,32 @@
 
 <body unresolved fullbleed layout vertical>
   <template is="auto-binding" id="app">
+    <core-style ref="hawt-branding"></core-style>
+
     <hawt-perspectives id="perspectives"></hawt-perspectives>
 
-    <core-drawer-panel>
+    <core-drawer-panel id="drawerPanel" narrow="{{narrow}}">
 
       <!-- Drawer -->
       <core-header-panel drawer>
 
         <!-- Drawer Toolbar -->
-        <core-toolbar>Menu</core-toolbar>
+        <core-toolbar id="coverImg">
+          {{branding.name}}
+        </core-toolbar>
 
-        <!-- Drawer Content -->
-        <core-menu selected="0">
-          <core-item label="Yo"></core-item>
-          <core-item label="Polymer"></core-item>
-          <core-item label="App"></core-item>
+        <core-menu selected="{{selectedPerspectiveIndex}}" excludedLocalNames="div" on-core-select="{{onPerspectiveSelect}}" on-core-activate="{{onPerspectiveTapped}}">
+          <template repeat="{{perspective in perspectives}}">
+            <paper-item>
+              <template if="{{perspective.icon}}">
+                <core-icon icon="{{perspective.icon}}"></core-icon>
+              </template>
+              <template if="{{perspective.image}}">
+                <core-icon src="{{perspective.image}}"></core-icon>
+              </template>
+              {{perspective.label}}
+            </paper-item>
+          </template>
         </core-menu>
 
       </core-header-panel>
@@ -54,8 +65,18 @@
         </core-toolbar>
 
         <div content>
-          <app-router mode="pushstate">
-            <app-route path="/" import="/pages/home-page.html"></app-route>
+          <app-router mode="pushstate" trailingSlash="ignore" on-state-change="{{appRouterStateChange}}" id="perspectiveRouter" init="manual">
+            <template repeat="{{perspective in perspectives}}">
+              <template if="{{perspective.import}}">
+                <app-route path="{{perspective.path}}" import="{{perspective.import}}"></app-route>
+              </template>
+              <template if="{{perspective.element}}">
+                <app-route path="{{perspective.path}}" element="{{perspective.element}}"></app-route>
+              </template>
+              <template if="{{perspective.redirect}}">
+                <app-route path="{{perspective.path}}" redirect="{{perspective.redirect}}"></app-route>
+              </template>
+            </template>
           </app-router>
         </div>
       </core-header-panel>
