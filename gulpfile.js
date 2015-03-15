@@ -9,7 +9,11 @@ var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
 var merge = require('merge-stream');
+var morgan = require('morgan');
 var path = require('path');
+var proxy = require('proxy-middleware');
+var url = require('url');
+var urljoin = require('url-join');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -160,8 +164,22 @@ gulp.task('vulcanize', function () {
 // Clean Output Directory
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
+var proxyRoutes = function() {
+  var kubernetesMaster = process.env.KUBERNETES_MASTER || 'https://localhost:8443';
+
+  var apiProxy = url.parse(urljoin(kubernetesMaster, "api"));
+  apiProxy.route = "/kubernetes/api";
+
+  var osapiProxy = url.parse(urljoin(kubernetesMaster, "osapi"));
+  osapiProxy.route = "/kubernetes/osapi";
+
+  return [proxy(apiProxy), proxy(osapiProxy)];
+}
+
+
 // Watch Files For Changes & Reload
 gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   browserSync({
     notify: false,
     // Run as an https by uncommenting 'https: true'
@@ -172,7 +190,8 @@ gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
       baseDir: ['.tmp', 'app'],
       routes: {
         '/components': 'components'
-      }
+      },
+      middleware: [morgan('combined')].concat(proxyRoutes())
     }
   });
 
@@ -185,13 +204,15 @@ gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
 
 // Build and serve the output from the dist build
 gulp.task('serve:dist', ['default'], function () {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   browserSync({
     notify: false,
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: 'dist'
+    server: 'dist',
+    middleware: [morgan('combined')].concat(proxyRoutes())
   });
 });
 
