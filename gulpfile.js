@@ -123,14 +123,14 @@ gulp.task('fonts', function () {
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function () {
-  var assets = $.useref.assets({searchPath: ['.tmp', 'app', 'dist']});
+  var assets = $.useref.assets({searchPath: ['.tmp', 'dist']});
 
   return gulp.src(['app/**/*.html', '!app/{elements,test}/**/*.html'])
     // Replace path for vulcanized assets
     .pipe($.if('*.html', $.replace('elements/elements.html', 'elements/elements.vulcanized.html')))
     .pipe(assets)
     // Concatenate And Minify JavaScript
-    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
+    .pipe($.if('*.js', $.uglify()))
     // Concatenate And Minify Styles
     // In case you are still using useref build blocks
     .pipe($.if('*.css', $.cssmin()))
@@ -155,7 +155,8 @@ gulp.task('vulcanize', function () {
     .pipe($.vulcanize({
       dest: DEST_DIR,
       strip: true,
-      inline: true
+      inline: true,
+      csp: true
     }))
     .pipe(gulp.dest(DEST_DIR))
     .pipe($.size({title: 'vulcanize'}));
@@ -198,7 +199,7 @@ gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/elements/**/*.{scss,css}'], ['elements', reload]);
-  gulp.watch(['app/{scripts,elements}/**/*.js'], ['traceur', reload]);
+  gulp.watch(['app/{scripts,elements}/**/*.js'], ['jshint', 'traceur', reload]);
   gulp.watch(['app/images/**/*'], reload);
 });
 
@@ -220,9 +221,10 @@ gulp.task('serve:dist', ['default'], function () {
 gulp.task('default', ['clean'], function (cb) {
   runSequence(
     ['copy', 'styles'],
+    'jshint',
     'traceur',
     'elements',
-    ['jshint', 'images', 'fonts', 'html'],
+    ['images', 'fonts', 'html'],
     'vulcanize',
     cb);
 });

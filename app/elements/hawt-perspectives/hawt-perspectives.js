@@ -9,7 +9,7 @@
     getPerspective: function(id) { return perspectivesMap[id]; },
     addPerspective: function(perspective) {
       if (perspectivesMap[perspective.id]) {
-        console.error("Perspective has already been added with id: " + perspective.id);
+        console.error('Perspective has already been added with id: ' + perspective.id);
       } else {
         perspectives.push(perspective);
         perspectivesMap[perspective.id] = perspective;
