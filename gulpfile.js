@@ -221,7 +221,7 @@ gulp.task('serve:dist', ['default'], function () {
 gulp.task('default', ['clean'], function (cb) {
   runSequence(
     ['copy', 'styles'],
-    'jshint',
+    //'jshint',
     'traceur',
     'elements',
     ['images', 'fonts', 'html'],

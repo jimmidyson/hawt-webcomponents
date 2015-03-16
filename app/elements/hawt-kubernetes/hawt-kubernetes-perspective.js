@@ -3,19 +3,19 @@
     id: 'kubernetes',
     label: 'Kubernetes',
     href: '/kubernetes',
-    element: 'kubernetes-overview',
+    element: 'hawt-kubernetes-pods',
     path: '/kubernetes',
     image: '/images/kubernetes.svg'
   };
 
-  Polymer({
+  Polymer('hawt-kubernetes-perspective', {
     ready: function() {
       this.$.perspectives.addPerspective(perspective);
     }
   });
 
-  if (!document.querySelector('kubernetes-perspective')) {
-    var p = document.createElement('kubernetes-perspective');
+  if (!document.querySelector('hawt-kubernetes-perspective')) {
+    var p = document.createElement('hawt-kubernetes-perspective');
     document.body.insertBefore(p, document.body.lastChild);
   }
 })();

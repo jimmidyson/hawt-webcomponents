@@ -1,0 +1,46 @@
+<link rel="import" href="hawt-kubernetes-perspective.html"/>
+<link rel="import" href="hawt-kubernetes-model.html"/>
+
+<polymer-element name="hawt-kubernetes-pods">
+  <template>
+    <style>
+      .pod {
+        background-color: #fafafa;
+        padding: 16px;
+        border-bottom: 1px solid #e0e0e0;
+        will-change: transform, opacity;
+      }
+      .pod[selected] {
+        background-color: silver;
+      }
+    </style>
+
+    <paper-toast id="errorToast" text="{{errorMessage}}"></paper-toast>
+
+    <core-selector selectedAttribute="selected" selected="{{selectedPods}}" multi>
+      <template repeat="{{pod in pods}}">
+        <div class="pod" layout horizontal>
+          <div flex layout horizontal>
+            <header layout vertical flex>
+              <span layout horizontal>
+                <span class="name">
+                  {{pod.id}}
+                </span>
+                <span class="ip">
+                  ({{pod.currentState.podIP}})
+                </span>
+                <span class="host">
+                  ({{pod.currentState.host}})
+                </span>
+              </span>
+              </span>
+            </header>
+          </div>
+        </div>
+      </template>
+    </core-selector>
+                                                                                                                                                               </core-selector>
+  </template>
+
+  <script src="hawt-kubernetes-pods.js"></script>
+</polymer-element>

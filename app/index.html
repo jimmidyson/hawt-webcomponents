@@ -2,6 +2,7 @@
 <html lang="">
 
 <head>
+  <base href="/">
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,15 +33,10 @@
     <hawt-perspectives id="perspectives"></hawt-perspectives>
 
     <core-drawer-panel id="drawerPanel" narrow="{{narrow}}">
-
-      <!-- Drawer -->
-      <core-header-panel drawer>
-
-        <!-- Drawer Toolbar -->
+      <core-header-panel mode="scroll" drawer>
         <core-toolbar id="coverImg">
           {{branding.name}}
         </core-toolbar>
-
         <core-menu selected="{{selectedPerspectiveIndex}}" excludedLocalNames="div" on-core-select="{{onPerspectiveSelect}}" on-core-activate="{{onPerspectiveTapped}}">
           <template repeat="{{perspective in perspectives}}">
             <paper-item>
@@ -54,18 +50,21 @@
             </paper-item>
           </template>
         </core-menu>
-
       </core-header-panel>
 
-      <!-- Main -->
-      <core-header-panel main>
-
-        <!-- Main Toolbar -->
-        <core-toolbar>
-          <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
-          <span>{{appName}}</span>
+      <core-scroll-header-panel fixed="true" main on-trackstart="{{onRefreshStart}}"  on-tracky="{{onMainAreaTrack}}" on-trackend="{{onRefreshUp}}">
+        <core-toolbar class="{{ {'core-narrow': narrow} | tokenList }}">
+        <paper-icon-button src="/images/hawtio_icon.png" core-drawer-toggle></paper-icon-button>
+          <span class="title">
+            <template if="{{!narrow && currentPerspective.icon}}">
+              <core-icon icon="{{currentPerspective.icon}}"></core-icon>
+            </template>
+            <template if="{{!narrow && currentPerspective.image}}">
+              <core-icon src="{{currentPerspective.image}}"></core-icon>
+            </template>
+            {{currentPerspective.label}}
+          </span>
         </core-toolbar>
-
         <div content>
           <app-router mode="pushstate" trailingSlash="ignore" on-state-change="{{appRouterStateChange}}" id="perspectiveRouter" init="manual">
             <template repeat="{{perspective in perspectives}}">
@@ -81,9 +80,8 @@
             </template>
           </app-router>
         </div>
-      </core-header-panel>
+      </core-scroll-header-panel>
     </core-drawer-panel>
-
   </template>
 
   <!-- build:js scripts/app.js -->
