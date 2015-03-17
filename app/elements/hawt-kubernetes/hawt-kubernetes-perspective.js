@@ -2,11 +2,16 @@
   var perspective = {
     id: 'kubernetes',
     label: 'Kubernetes',
-    href: '/kubernetes',
     element: 'hawt-kubernetes-pods',
-    path: '/kubernetes',
-    image: '/images/kubernetes.svg'
+    image: '/images/kubernetes.svg',
   };
+  perspective.pages = [{
+    id: 'kubernetes-pods',
+    label: 'Pods',
+    href: '/kubernetes/pods',
+    element: 'hawt-kubernetes-pods',
+    path: '/kubernetes/pods',
+  }];
 
   Polymer('hawt-kubernetes-perspective', {
     ready: function() {

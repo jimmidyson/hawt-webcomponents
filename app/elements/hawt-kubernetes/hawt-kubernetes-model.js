@@ -7,6 +7,26 @@ class KubernetesCollection extends Backbone.Collection {
   }
 }
 
+class Namespace extends Backbone.Model {
+  constructor (args) {
+    super(args) /* mandatory */
+
+    Object.defineProperty(this, "uid", {
+      get: function (){ return this.get("uid")} ,
+      set: function (value) { this.set("uid",value); }
+    });
+  }
+
+}
+
+class Namespaces extends KubernetesCollection {
+  constructor(args) {
+    super(args);
+    this.model = Namespace;
+    this.url = '/kubernetes/api/v1beta2/namespaces';
+  }
+}
+
 class Pod extends Backbone.Model {
   constructor (args) {
     super(args) /* mandatory */

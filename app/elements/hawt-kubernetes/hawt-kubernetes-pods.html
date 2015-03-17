@@ -1,7 +1,10 @@
-<link rel="import" href="hawt-kubernetes-perspective.html"/>
-<link rel="import" href="hawt-kubernetes-model.html"/>
+<link rel="import" href="../../components/paper-toast/paper-toast.html">
+<link rel="import" href="../../components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../components/paper-dropdown/paper-dropdown.html">
+<link rel="import" href="../../components/core-menu/core-menu.html">
+<link rel="import" href="hawt-kubernetes-model.html">
 
-<polymer-element name="hawt-kubernetes-pods">
+<polymer-element name="hawt-kubernetes-pods" attributes="namespace">
   <template>
     <style>
       .pod {
@@ -16,6 +19,16 @@
     </style>
 
     <paper-toast id="errorToast" text="{{errorMessage}}"></paper-toast>
+
+    <paper-dropdown-menu label="Select a namespace">
+      <paper-dropdown class="dropdown" transition="core-transition-top">
+      <core-menu class="menu" selected="0" valueattr="id" selectedModel="{{selectedNamespace}}">
+          <template repeat="{{namespace in namespaces}}">
+            <paper-item>{{namespace.id}}</paper-item>
+          </template>
+        </core-menu>
+      </paper-dropdown>
+    </paper-dropdown-menu>
 
     <core-selector selectedAttribute="selected" selected="{{selectedPods}}" multi>
       <template repeat="{{pod in pods}}">

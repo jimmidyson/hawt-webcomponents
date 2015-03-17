@@ -14,6 +14,7 @@ var proxy = require('proxy-middleware');
 var url = require('url');
 var urljoin = require('url-join');
 var historyApiFallback = require('connect-history-api-fallback');
+var gutil = require('gulp-util');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -59,7 +60,7 @@ gulp.task('elements', function () {
 gulp.task('traceur', function() {
   return gulp.src(['app/**/*.js'])
     .pipe($.sourcemaps.init())
-    .pipe($.traceur())
+    .pipe($.traceur()).on('error', gutil.log)
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('.tmp/'))
     .pipe(gulp.dest('dist/'));
