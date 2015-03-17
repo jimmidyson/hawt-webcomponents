@@ -8,7 +8,9 @@ dependencies:
   pre:
     - npm install -g bower gulp
     - npm install
+    - npm prune
     - bower install
+    - bower prune
   override:
     - gulp
 
