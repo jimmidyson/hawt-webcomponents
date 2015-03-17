@@ -1,0 +1,26 @@
+machine:
+  node:
+    version: 0.10.33
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - npm install -g bower gulp
+    - npm install
+    - bower install
+  override:
+    - gulp
+
+test:
+  override:
+    - echo yes
+
+#deployment:
+#  hub:
+#    branch: master
+#    owner: jimmidyson
+#    commands:
+#      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+#      - docker build -t jimmidyson/hawt-webcomponents .
+#      - docker push jimmidyson/hawt-webcomponents
