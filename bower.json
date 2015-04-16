@@ -2,6 +2,7 @@
   "name": "hawt-webcomponents",
   "version": "0.0.0",
   "dependencies": {
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.6",
     "core-elements": "Polymer/core-elements#^0.5.4",
     "paper-elements": "Polymer/paper-elements#^0.5.4",
     "traceur": "~0.0.87",
@@ -14,5 +15,9 @@
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^2.2.6"
+  },
+  "resolutions": {
+    "polymer": "^0.5",
+    "webcomponentsjs": "^0.6"
   }
 }

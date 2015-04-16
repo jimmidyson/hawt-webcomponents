@@ -10,7 +10,6 @@ var pagespeed = require('psi');
 var reload = browserSync.reload;
 var merge = require('merge-stream');
 var path = require('path');
-var proxy = require('proxy-middleware');
 var url = require('url');
 var urljoin = require('url-join');
 var historyApiFallback = require('connect-history-api-fallback');
@@ -166,18 +165,28 @@ gulp.task('vulcanize', function () {
 // Clean Output Directory
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-var proxyRoutes = function() {
-  var kubernetesMaster = process.env.KUBERNETES_MASTER || 'https://localhost:8443';
+var kubeBase = process.env.KUBERNETES_MASTER || 'https://localhost:8443';
 
-  var apiProxy = url.parse(urljoin(kubernetesMaster, "api"));
-  apiProxy.route = "/kubernetes/api";
-
-  var osapiProxy = url.parse(urljoin(kubernetesMaster, "osapi"));
-  osapiProxy.route = "/kubernetes/osapi";
-
-  return [proxy(apiProxy), proxy(osapiProxy)];
-}
-
+var kubernetesConfigJsMiddleware = function(req, res, next) {
+  if (req.url.startsWith('/config/kubernetes-config.js')) {
+    var configJs = 'window.KUBERNETES_CONFIG = {' +
+      '  baseUrl: "' + kubeBase + '"' +
+      '};';
+    res.setHeader('Content-Type', 'application/javascript');
+    res.write(configJs);
+    res.end();
+  } else if (req.url.startsWith('/config/oauth-config.js')) {
+    var configJs = 'window.OAUTH_CONFIG = {' +
+      '  clientId: "fabric8-console",' +
+      '  authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize') + '"' +
+      '};';
+    res.setHeader('Content-Type', 'application/javascript');
+    res.write(configJs);
+    res.end();
+  } else {
+    next();
+  }
+};
 
 // Watch Files For Changes & Reload
 gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
@@ -193,7 +202,7 @@ gulp.task('serve', ['traceur', 'styles', 'elements'], function () {
       routes: {
         '/components': 'components'
       },
-      middleware: proxyRoutes().concat(historyApiFallback)
+      middleware: [historyApiFallback, kubernetesConfigJsMiddleware]
     }
   });
 
@@ -214,7 +223,7 @@ gulp.task('serve:dist', ['default'], function () {
     //       will present a certificate warning in the browser.
     // https: true,
     server: 'dist',
-    middleware: proxyRoutes().concat(historyApiFallback)
+    middleware: [historyApiFallback, kubernetesConfigJsMiddleware]
   });
 });
 

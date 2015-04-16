@@ -1,0 +1,11 @@
+<link rel="import" href="../../components/polymer/polymer.html"/>
+<link rel="import" href="../../components/core-localstorage/core-localstorage.html"/>
+<link rel="import" href="../underscore/underscore.html"/>
+
+<polymer-element name="hawt-oauth" hidden attributes="authorizeUri clientId responseType">
+  <template>
+    <core-localstorage name="hawt-user" value="{{user}}" id="localstorageUser"></core-localstorage>
+    <core-localstorage name="hawt-token" value="{{token}}" id="localstorageToken"></core-localstorage>
+  </template>
+  <script src="hawt-oauth.js"></script>
+</polymer-element>

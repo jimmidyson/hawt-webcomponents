@@ -28,6 +28,8 @@
 
 <body unresolved fullbleed layout vertical>
   <template is="auto-binding" id="app">
+    <hawt-oauth authorizeUri="https://localhost:8443/oauth/authorize" clientId="fabric8-console"></hawt-oauth>
+
     <core-style ref="hawt-branding"></core-style>
 
     <hawt-perspectives id="perspectives"></hawt-perspectives>
@@ -68,6 +70,10 @@
     </core-drawer-panel>
   </template>
 
+  <hawt-kubernetes-perspective></hawt-kubernetes-perspective>
+
+  <script src="/config/kubernetes-config.js"></script>
+  <script src="/config/oauth-config.js"></script>
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
