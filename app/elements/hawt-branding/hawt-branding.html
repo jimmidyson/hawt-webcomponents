@@ -19,5 +19,17 @@
       will-change: opacity;
       transition: opacity 600ms ease-in-out;
     }
+    .resource-row {
+      background-color: #fafafa;
+      padding: 16px;
+      border-bottom: 1px solid #e0e0e0;
+      will-change: transform, opacity;
+    }
+    .resource-row[selected] {
+      background-color: silver;
+    }
+    .state-ready {
+      background: #259b24;
+    }
   </core-style>
 </polymer-element>

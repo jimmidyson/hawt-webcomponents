@@ -4,9 +4,10 @@
 <link rel="import" href="../../components/core-menu/core-menu.html">
 <link rel="import" href="hawt-kubernetes-model.html">
 
-<polymer-element name="hawt-kubernetes-pods" attributes="namespace">
+<polymer-element name="hawt-kubernetes-services" attributes="namespace">
   <template>
     <core-style ref="hawt-branding"></core-style>
+
     <paper-toast id="errorToast" text="{{errorMessage}}"></paper-toast>
 
     <paper-dropdown-menu label="Select a namespace">
@@ -19,20 +20,17 @@
       </paper-dropdown>
     </paper-dropdown-menu>
 
-    <core-selector selectedAttribute="selected" selected="{{selectedPods}}" multi>
-      <template repeat="{{pod in pods}}">
+    <core-selector selectedAttribute="selected" selected="{{selectedServices}}" multi>
+      <template repeat="{{service in services}}">
         <div class="resource-row" layout horizontal>
           <div flex layout horizontal>
             <header layout vertical flex>
               <span layout horizontal>
                 <span class="name">
-                  {{pod.id}}
+                  {{service.id}}
                 </span>
                 <span class="ip">
-                  ({{pod.currentState.podIP}})
-                </span>
-                <span class="host">
-                  ({{pod.currentState.host}})
+                  ({{service.portalIP}}:{{service.port}})
                 </span>
               </span>
               </span>
@@ -44,5 +42,5 @@
                                                                                                                                                                </core-selector>
   </template>
 
-  <script src="hawt-kubernetes-pods.js"></script>
+  <script src="hawt-kubernetes-services.js"></script>
 </polymer-element>
